@@ -4,4 +4,4 @@
 3. Specify date (from:to) in the code images will be downloaded in between the dates you specified <br/>
 4. install required modules (i prefer install spyder through anaconda) <br/>
 5. then set working directory in your IDE <br/>
-6. Downloading starts. <br/>
+6. Downloading starts. <br/> 

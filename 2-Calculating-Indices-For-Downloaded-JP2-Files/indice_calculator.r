@@ -45,7 +45,7 @@ for(i in 1:length(folders)){
           print("Cannot define Indice Name!")
           break
         }
-      }else if(indices[j] == "ndre1" || indices[j] == "ndre1"){
+      }else if(indices[j] == "ndre1" || indices[j] == "ndre2"){
         nir <- raster(paste(temp_dir,temp_bands_list[8],sep="",collapse = NULL))
         if(indices[j] == "ndre1"){
           re <- raster(paste(temp_dir,temp_bands_list[5],sep="",collapse = NULL))

@@ -20,14 +20,13 @@ for(indice in indice_list){
       if(dir.exists(rtempdir)){
         rtempdir_files <- list.files(rtempdir,pattern=NULL,full.names=TRUE)
         for(temp_file in rtempdir_files){
-          cat(temp_file,"----- Deleted \n")
           unlink(temp_file,force=FALSE)
         }
       }else{
         print("Raster Directory Doesn't exist!")
       }
-      cat(paste("Projections for ",indice_one_file_name,": "))
-      cat(raster(paste(paste(copy_dir,indice,sep=""),indice_one_file_name,sep="/")),"\n")
+      cat(paste("Projections for ",indice_one_file_name,": \n"))
+      cat(raster(paste(paste(copy_dir,indice,sep=""),indice_one_file_name,sep="/")),"\n ------------------------------------ \n")
     }
   }
   cat("\n")

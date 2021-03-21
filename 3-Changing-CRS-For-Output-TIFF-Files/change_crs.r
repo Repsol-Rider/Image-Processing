@@ -14,16 +14,13 @@ for(indice in indice_list){
     for(a_file in indice_dir_list){
       indice_one_file_name <- substr(a_file,nchar(indice_dir)+2,nchar(a_file))
       r <- raster(a_file)
-      r <- st_transform(r,"+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs")
       r2 <- projectRaster(r,crs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs")
-      writeRaster(r2,
-                  filename=paste(copy_dir,paste(indice,indice_one_file_name,sep="/"),sep=""),
-                  overwrite=TRUE
-      )
+      writeRaster(r2,filename=paste(copy_dir,paste(indice,indice_one_file_name,sep="/"),sep=""),overwrite=TRUE)
       rtempdir <- paste(tempdir(),"raster",sep="\\")
       if(dir.exists(rtempdir)){
-        rtempdir_files <- list.files(rtempdir,pattern="\\.gri$")
+        rtempdir_files <- list.files(rtempdir,pattern=NULL,full.names=TRUE)
         for(temp_file in rtempdir_files){
+          cat(temp_file,"----- Deleted")
           unlink(temp_file,recurisive=FALSE,force=FALSE)
         }
       }else{

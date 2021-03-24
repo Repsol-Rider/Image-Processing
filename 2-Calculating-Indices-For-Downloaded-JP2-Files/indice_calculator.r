@@ -6,7 +6,7 @@ resulting_dir <- paste(main_dir,"INDICES/",sep="/")
 setwd(main_dir)
 dir.create(resulting_dir,recursive = FALSE,showWarnings = TRUE,mode = 0777)
 folders <- list.dirs(main_dir, recursive=FALSE)
-indices <- c("evi2","lswi","ndvi","ndwi","npsri","savi")
+indices <- c("evi2","lswi","ndvi","ndwi","npcri","savi")
 for(indice in indices){
   #print(paste(indice,"directory created successfully"))
   dir.create(paste(resulting_dir,indice,sep="/"),showWarnings = TRUE,recursive = FALSE,mode = 0777)
@@ -78,6 +78,13 @@ for(i in 1:length(folders)){
                   format = "GTiff",
                   datatype='FLT4S'
       )
+      temp_dir <- paste(tempdir(),"raster",sep="/")
+      if(dir.exists(temp_dir)){
+          temp_file <- list.files(temp_dir,pattern=NULL,full.names=TRUE)
+          for(tmpfile in temp_file){
+              unlink(tmpfile,recursive=FALSE,force=TRUE)
+          }
+      }
     }
   }
 }

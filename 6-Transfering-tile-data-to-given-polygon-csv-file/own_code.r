@@ -1,3 +1,4 @@
+library('leaflet')
 
 # GETTING LONGITUDES AND LATITUDES FROM A GIVEN CSV FILE
 csv <- read.csv(file="E:/gis/polygon.csv",nrows=1,stringsAsFactors=FALSE)
@@ -17,8 +18,27 @@ for(chr in 1:nchar(csv_sub_str)){
         whole_chr <- ""
     }
 }
-print(lat_longs_list)
+csv_sub_str <- gsub(" ",",",csv_sub_str)
+latt <- c()
+longg <- c()
+for(val in 1:length(lat_longs_list)){
+    if(val %% 2 == 0){
+        latt <- append(latt,lat_longs_list[val],after=length(latt))
+    }else if(val %% 2 == 1){
+        longg <- append(longg,lat_longs_list[val],after=length(longg))
+    }
+}
+df <- data.frame(Lon=longg,Lat=latt,stringsAsFactors=FALSE)
+write.csv(df,"D:/TEST/temp.csv",row.names=FALSE)
+#PLOT POLYGON ON MAP
 
+print(csv_sub_str)
+
+m1 <- matrix(as.numeric(strsplit(csv_sub_str,",")[[1]]),ncol=2,byrow=TRUE)
+map <- leaflet()
+map <- addTiles(map)
+map <- addPolygons(map,data=m1,color="blue",weight=4,smoothFactor=0.5,opacity=1.0,fillOpacity=0.5,fillColor='red')
+map
 #PLOTTING LONG LATS ON SPECIFIED TILE GIVEN IN CSV FILE
 
 #APPENDING SPECIFIED TILE DATA TO THE POLYGON GIVEN IN CSV 

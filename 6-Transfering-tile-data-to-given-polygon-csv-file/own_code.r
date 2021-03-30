@@ -28,8 +28,6 @@ for(val in 1:length(lat_longs_list)){
         longg <- append(longg,lat_longs_list[val],after=length(longg))
     }
 }
-df <- data.frame(Lon=longg,Lat=latt,stringsAsFactors=FALSE)
-write.csv(df,"D:/TEST/temp.csv",row.names=FALSE)
 #PLOT POLYGON ON MAP
 
 print(csv_sub_str)

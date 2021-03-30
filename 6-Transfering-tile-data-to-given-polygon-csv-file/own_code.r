@@ -39,3 +39,6 @@ map
 #PLOTTING LONG LATS ON SPECIFIED TILE GIVEN IN CSV FILE
 
 #APPENDING SPECIFIED TILE DATA TO THE POLYGON GIVEN IN CSV 
+
+
+#https://gis.stackexchange.com/questions/246273/how-to-plot-polygon-in-r-from-coordinates-string

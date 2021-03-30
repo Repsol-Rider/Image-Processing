@@ -30,13 +30,12 @@ for(val in 1:length(lat_longs_list)){
 }
 #PLOT POLYGON ON MAP
 
-print(csv_sub_str)
-
 m1 <- matrix(as.numeric(strsplit(csv_sub_str,",")[[1]]),ncol=2,byrow=TRUE)
 map <- leaflet()
 map <- addTiles(map)
 map <- addPolygons(map,data=m1,color="blue",weight=4,smoothFactor=0.5,opacity=1.0,fillOpacity=0.5,fillColor='red')
 map
+
 #PLOTTING LONG LATS ON SPECIFIED TILE GIVEN IN CSV FILE
 
 #APPENDING SPECIFIED TILE DATA TO THE POLYGON GIVEN IN CSV 

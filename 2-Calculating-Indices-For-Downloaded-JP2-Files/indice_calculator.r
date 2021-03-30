@@ -1,7 +1,7 @@
 library(raster)
 library(RStoolbox)
 
-main_dir <- "D:/TEST"
+main_dir <- "D:/TEST"   #edit this directory to satellite downloaded tile files 
 resulting_dir <- paste(main_dir,"INDICES/",sep="/")
 setwd(main_dir)
 dir.create(resulting_dir,recursive = FALSE,showWarnings = TRUE,mode = 0777)

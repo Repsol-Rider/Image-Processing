@@ -26,7 +26,8 @@ for(indice in indice_list){
         print("Raster Directory Doesn't exist!")
       }
       cat(paste("Projections for ",indice_one_file_name,": \n"))
-      cat(raster(paste(paste(copy_dir,indice,sep=""),indice_one_file_name,sep="/")),"\n ------------------------------------ \n")
+      ras <- raster(paste(paste(copy_dir,indice,sep=""),indice_one_file_name,sep="/"))
+      cat(ras,"\n ------------------------------------ \n")
     }
   }
   cat("\n")

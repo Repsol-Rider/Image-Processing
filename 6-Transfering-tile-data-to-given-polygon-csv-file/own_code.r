@@ -42,6 +42,11 @@ plot(croped)
 
 #PLOTTING LONG LATS ON SPECIFIED TILE GIVEN IN CSV FILE
 
+pts <- rasterToPoints(croped)
+ndvi_df <- data.frame(pts)
+ndvi_df <- data.frame(ndvi_df[3],ndvi_df[1],ndvi_df[2])
+ndvi_df
+
 #APPENDING SPECIFIED TILE DATA TO THE POLYGON GIVEN IN CSV 
 
 

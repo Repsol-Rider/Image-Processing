@@ -36,9 +36,9 @@ longg <- list.remove(longg,5)
 #PLOT POLYGON ON MAP
 
 ndvi <- raster("E:/GIS/DOWNLOADED_43PHR/INDICES/ndvi/reprojected/reprojetced_2/_T43PHR_20200925T050701.tif")
-new.extent <- extent(min(longg),max(longg),min(latt),max(latt))
-croped <- crop(x=ndvi,y=new.extent)
-plot(new.extent,col="blue",lwd=5,add=TRUE)
+extent1 <- extent(78.0841966200489,78.0983266241176,14.0392004877398,14.0497157354592)
+croped <- crop(x=ndvi,y=extent1)
+plot(croped)
 
 #PLOTTING LONG LATS ON SPECIFIED TILE GIVEN IN CSV FILE
 

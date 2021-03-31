@@ -1,4 +1,5 @@
-library('leaflet')
+library('raster')
+library('rlist')
 
 # GETTING LONGITUDES AND LATITUDES FROM A GIVEN CSV FILE
 csv <- read.csv(file="E:/gis/polygon.csv",nrows=1,stringsAsFactors=FALSE)
@@ -28,13 +29,16 @@ for(val in 1:length(lat_longs_list)){
         longg <- append(longg,lat_longs_list[val],after=length(longg))
     }
 }
+latt <- list.remove(latt,5)
+longg <- list.remove(longg,5)
+
+
 #PLOT POLYGON ON MAP
 
-m1 <- matrix(as.numeric(strsplit(csv_sub_str,",")[[1]]),ncol=2,byrow=TRUE)
-map <- leaflet()
-map <- addTiles(map)
-map <- addPolygons(map,data=m1,color="blue",weight=4,smoothFactor=0.5,opacity=1.0,fillOpacity=0.5,fillColor='red')
-map
+ndvi <- raster("E:/GIS/DOWNLOADED_43PHR/INDICES/ndvi/reprojected/reprojetced_2/_T43PHR_20200925T050701.tif")
+new.extent <- extent(min(longg),max(longg),min(latt),max(latt))
+croped <- crop(x=ndvi,y=new.extent)
+plot(new.extent,col="blue",lwd=5,add=TRUE)
 
 #PLOTTING LONG LATS ON SPECIFIED TILE GIVEN IN CSV FILE
 

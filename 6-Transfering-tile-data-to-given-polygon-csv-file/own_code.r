@@ -42,10 +42,16 @@ plot(croped)
 
 #PLOTTING LONG LATS ON SPECIFIED TILE GIVEN IN CSV FILE
 
+cname <- names(croped)
 pts <- rasterToPoints(croped)
 ndvi_df <- data.frame(pts)
-ndvi_df <- data.frame(ndvi_df[3],ndvi_df[1],ndvi_df[2])
-ndvi_df
+ndvi_df <- data.frame(ndvi_df[1],ndvi_df[2],ndvi_df[3])
+names(ndvi_df)[names(ndvi_df) == cname] <- "NDVI"
+names(ndvi_df)[names(ndvi_df) == "x"] <- "Long"
+names(ndvi_df)[names(ndvi_df) == "y"] <- "Lat"
+csv_file_name <- paste("E:/GIS/DOWNLOADED_43PHR/INDICES/POLYGON_CSV_FILES/",paste(cname,".csv",sep=""),sep="")
+write.csv(ndvi_df,csv_file_name,row.names=FALSE)
+
 
 #APPENDING SPECIFIED TILE DATA TO THE POLYGON GIVEN IN CSV 
 

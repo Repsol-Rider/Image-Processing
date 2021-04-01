@@ -115,12 +115,17 @@ for(csv_row in csv$WKT){
     meanlst <- append(meanlst," ",after=length(meanlst))
     maxlst <- append(maxlst," ",after=length(maxlst))
     minlst <- append(minlst," ",after=length(minlst))
-    if(pi == 30){
-        break
+    if(pi == 50){
+        polygon_dir <- paste(tile_dir,paste(pi,"csv",sep="."),sep="/")
+        full_df <- data.frame(PID=numlst,Date=datelst,Mean=meanlst,Max=maxlst,Min=minlst)
+        write.csv(full_df,polygon_dir,col.names=FALSE,row.names=FALSE)
+        numlst <- c()
+        datelst <- c()
+        meanlst <- c()
+        maxlst <- c()
+        minlst <- c()
     }
     pi <- pi + 1
 }
-full_df <- data.frame(PID=numlst,Date=datelst,Mean=meanlst,Max=maxlst,Min=minlst)
-write.csv(full_df,polygon_dir,col.names=FALSE,row.names=FALSE)
 
 #https://www.neonscience.org/resources/learning-hub/tutorials/dc-crop-extract-raster-data-r

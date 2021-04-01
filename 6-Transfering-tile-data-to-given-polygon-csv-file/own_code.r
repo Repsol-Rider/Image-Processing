@@ -7,34 +7,49 @@ csv <- read.csv(file="E:/GIS/43phr.csv",stringsAsFactors=FALSE)
 tile_dir <- "E:/GIS/DOWNLOADED_43PHR/INDICES/ndvi"
 polygon_dir <- paste(tile_dir,"test_polygon.csv",sep="/")
 file.create(polygon_dir,showWarnings=FALSE)
+# csv <- read.csv(file="E:/GIS/43phr.csv",stringsAsFactors=FALSE)
 for(csv_row in csv$WKT){
     csv_len <- nchar(csv_row)
-    csv_sub_str <- substr(csv_row,17,csv_len-3)
-    whole_chr <- ""
-    lat_longs_list <- c()
-    for(chr in 1:nchar(csv_sub_str)){
-        one_chr <- substr(csv_sub_str,chr,chr)
-        if(one_chr == "," || one_chr == " "){
-            one_chr <- ""
-        }
-        whole_chr <- paste(whole_chr,one_chr,sep="")
-        if(nchar(whole_chr) == 16){
-            lat_longs_list <- append(lat_longs_list,whole_chr,after=length(lat_longs_list))
-            whole_chr <- ""
+    csv_row <- substr(csv_row,17,csv_len-3)
+    lat_long_list <- c()
+    cord <- ""
+    for(chrid in 1:csv_len){
+        chr <- substr(csv_row,chrid,chrid)
+        if(chr == " " || chr == ","){
+            lat_long_list <- append(lat_long_list,cord,after=length(lat_long_list))
+            cord <- ""
+        }else{
+            cord <- paste(cord,chr,sep="")
         }
     }
-    csv_sub_str <- gsub(" ",",",csv_sub_str)
+    lat_long_list <- list.remove(lat_long_list,length(lat_long_list))
+    
+    # <- list.remove(lat_long_list)
+    # csv_sub_str <- substr(csv_row,17,csv_len-3)
+    # whole_chr <- ""
+    # lat_longs_list <- c()
+    # for(chr in 1:nchar(csv_sub_str)){
+    #     one_chr <- substr(csv_sub_str,chr,chr)
+    #     if(one_chr == "," || one_chr == " "){
+    #         one_chr <- ""
+    #     }
+    #     whole_chr <- paste(whole_chr,one_chr,sep="")
+    #     if(nchar(whole_chr) == 16){
+    #         lat_longs_list <- append(lat_longs_list,whole_chr,after=length(lat_longs_list))
+    #         whole_chr <- ""
+    #     }
+    # }
+    # csv_sub_str <- gsub(" ",",",csv_sub_str)
     latt <- c()
     longg <- c()
-    for(val in 1:length(lat_longs_list)){
+    for(val in 1:length(lat_long_list)){
         if(val %% 2 == 0){
-            latt <- append(latt,lat_longs_list[val],after=length(latt))
+            latt <- append(latt,lat_long_list[val],after=length(latt))
         }else if(val %% 2 == 1){
-            longg <- append(longg,lat_longs_list[val],after=length(longg))
+            longg <- append(longg,lat_long_list[val],after=length(longg))
         }
     }
-    latt
-    longg
+    
     # latt <- list.remove(latt,5)
     # longg <- list.remove(longg,5)
     
@@ -77,9 +92,10 @@ for(csv_row in csv$WKT){
         for(val in 1:length(ndvi_df$NDVI)){
             mean <- ndvi_df$NDVI[val] + mean
         }
+        cat(val,"Pixels Found in",cname,"Polygon\n")
         mean <- mean/val
         get_date <- names(croped)
-        get_date <- substr(get_date,10,17)
+        get_date <- substr(get_date,8,15)
         get_date <- paste(substr(get_date,1,4),paste(substr(get_date,5,6),substr(get_date,7,8),sep="-"),sep="-")
         
         numlst <- append(numlst,i,after=length(numlst))

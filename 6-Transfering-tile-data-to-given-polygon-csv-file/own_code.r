@@ -1,6 +1,7 @@
 library('raster')
 library('rlist')
 
+options(warn=-1,max.print=50)
 # GETTING LONGITUDES AND LATITUDES FROM A GIVEN CSV FILE
 csv <- read.csv(file="E:/gis/polygon.csv",nrows=1,stringsAsFactors=FALSE)
 one_row <- csv[1]
@@ -40,20 +41,24 @@ extent1 <- extent(78.0841966200489,78.0983266241176,14.0392004877398,14.04971573
 croped <- crop(x=ndvi,y=extent1)
 plot(croped)
 
-#PLOTTING LONG LATS ON SPECIFIED TILE GIVEN IN CSV FILE
+# EXPORTING MEAN OF NDIV OF SPECIFIED POLYGON TO A CSV FILE
 
 cname <- names(croped)
 pts <- rasterToPoints(croped)
 ndvi_df <- data.frame(pts)
-ndvi_df <- data.frame(ndvi_df[1],ndvi_df[2],ndvi_df[3])
+ndvi_df <- data.frame(ndvi_df[3])
 names(ndvi_df)[names(ndvi_df) == cname] <- "NDVI"
-names(ndvi_df)[names(ndvi_df) == "x"] <- "Long"
-names(ndvi_df)[names(ndvi_df) == "y"] <- "Lat"
-csv_file_name <- paste("E:/GIS/DOWNLOADED_43PHR/INDICES/POLYGON_CSV_FILES/",paste(cname,".csv",sep=""),sep="")
-write.csv(ndvi_df,csv_file_name,row.names=FALSE)
+mean <- 0
+for(val in 1:length(ndvi_df$NDVI)){
+    mean <- ndvi_df$NDVI[val] + mean
+}
+mean <- mean/val
+get_date <- names(croped)
+get_date <- substr(get_date,10,17)
+get_date <- paste(substr(get_date,1,4),paste(substr(get_date,5,6),substr(get_date,7,8),sep="-"),sep="-")
+get_date
+mean
+# csv_file_name <- paste("E:/GIS/DOWNLOADED_43PHR/INDICES/POLYGON_CSV_FILES/",paste(cname,".csv",sep=""),sep="")
+# write.csv(ndvi_df,csv_file_name,row.names=FALSE)
 
-
-#APPENDING SPECIFIED TILE DATA TO THE POLYGON GIVEN IN CSV 
-
-
-#https://gis.stackexchange.com/questions/246273/how-to-plot-polygon-in-r-from-coordinates-string
+#https://www.neonscience.org/resources/learning-hub/tutorials/dc-crop-extract-raster-data-r

@@ -3,11 +3,17 @@ library('rlist')
 
 options(warn=-1,max.print=50,digits=14)
 # GETTING LONGITUDES AND LATITUDES FROM A GIVEN CSV FILE
-csv <- read.csv(file="E:/GIS/43phr.csv",stringsAsFactors=FALSE)
+# csv <- read.csv(file="E:/GIS/t43phr.csv",stringsAsFactors=FALSE)
+csv <- read.csv(file="E:/GIS/t43phr.csv",stringsAsFactors=FALSE)
 tile_dir <- "E:/GIS/DOWNLOADED_43PHR/INDICES/ndvi"
 polygon_dir <- paste(tile_dir,"test_polygon.csv",sep="/")
 file.create(polygon_dir,showWarnings=FALSE)
-# csv <- read.csv(file="E:/GIS/43phr.csv",stringsAsFactors=FALSE)
+pi <- 1
+numlst <- c()
+datelst <- c()
+meanlst <- c()
+maxlst <- c()
+minlst <- c()
 for(csv_row in csv$WKT){
     csv_len <- nchar(csv_row)
     csv_row <- substr(csv_row,17,csv_len-3)
@@ -67,11 +73,6 @@ for(csv_row in csv$WKT){
     
     tile_files <- list.files(path=tile_dir,pattern="\\.tif$",full.names=TRUE)
     i <- 1
-    numlst <- c()
-    datelst <- c()
-    meanlst <- c()
-    maxlst <- c()
-    minlst <- c()
     for(a_file in tile_files){
     
         #PLOT POLYGON ON MAP
@@ -92,13 +93,13 @@ for(csv_row in csv$WKT){
         for(val in 1:length(ndvi_df$NDVI)){
             mean <- ndvi_df$NDVI[val] + mean
         }
-        cat(val,"Pixels Found in",cname,"Polygon\n")
+        # cat(val,"Pixels Found in",cname,"Polygon\n")
         mean <- mean/val
         get_date <- names(croped)
         get_date <- substr(get_date,8,15)
         get_date <- paste(substr(get_date,1,4),paste(substr(get_date,5,6),substr(get_date,7,8),sep="-"),sep="-")
         
-        numlst <- append(numlst,i,after=length(numlst))
+        numlst <- append(numlst,csv$pid[pi],after=length(numlst))
         datelst <- append(datelst,get_date,after=length(datelst))
         meanlst <- append(meanlst,mean,after=length(meanlst))
         maxlst <- append(maxlst,max(ndvi_df$NDVI),after=length(maxlst))
@@ -108,9 +109,18 @@ for(csv_row in csv$WKT){
         # cat(i,"  NDVI  ",get_date,"   ",mean,"   ",max(ndvi_df$NDVI),"    ",min(ndvi_df$NDVI),"\n")
         i <- i + 1
     }
-    full_df <- data.frame(ID=numlst,Date=datelst,Mean=meanlst,Max=maxlst,Min=minlst)
-    write.csv(full_df,polygon_dir,col.names=FALSE,row.names=FALSE)
-
+    cat(csv$pid[pi]," Polygon Data Calculated\n")
+    numlst <- append(numlst," ",after=length(numlst))
+    datelst <- append(datelst," ",after=length(datelst))
+    meanlst <- append(meanlst," ",after=length(meanlst))
+    maxlst <- append(maxlst," ",after=length(maxlst))
+    minlst <- append(minlst," ",after=length(minlst))
+    if(pi == 30){
+        break
+    }
+    pi <- pi + 1
 }
+full_df <- data.frame(PID=numlst,Date=datelst,Mean=meanlst,Max=maxlst,Min=minlst)
+write.csv(full_df,polygon_dir,col.names=FALSE,row.names=FALSE)
 
 #https://www.neonscience.org/resources/learning-hub/tutorials/dc-crop-extract-raster-data-r

@@ -7,7 +7,7 @@ username_esa = "porav43844"
 password_esa = "sourcecode88"
 # username2 - ninadobrev
 # password2 - imageprocessing
-tiles = ['44QME']
+tiles = ['43PHR']
 api = SentinelAPI(username_esa, password_esa, 'https://scihub.copernicus.eu/dhus')
 query_kwargs = {
         'platformname': 'Sentinel-2',

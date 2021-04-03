@@ -2,8 +2,8 @@ library('raster')
 library('rlist')
 
 options(warn=-1,max.print=50,digits=14)
-# GETTING LONGITUDES AND LATITUDES FROM A GIVEN CSV FILE
-# csv <- read.csv(file="E:/GIS/t43phr.csv",stringsAsFactors=FALSE)
+
+# GETTING PROJECTION COORDINATES FROM A GIVEN CSV FILE
 csv <- read.csv(file="D:/JOB/GIS/t43phr.csv",stringsAsFactors=FALSE)    
 tile_dir <- "D:/JOB/GIS/T43PHR/INDICES/ndvi"
 polygon_dir <- paste(tile_dir,"test_polygon.csv",sep="/")
@@ -31,23 +31,7 @@ for(csv_row in csv$WKT){
     }
   }
   lat_long_list <- list.remove(lat_long_list,length(lat_long_list))
-  
-  # <- list.remove(lat_long_list)
-  # csv_sub_str <- substr(csv_row,17,csv_len-3)
-  # whole_chr <- ""
-  # lat_longs_list <- c()
-  # for(chr in 1:nchar(csv_sub_str)){
-  #     one_chr <- substr(csv_sub_str,chr,chr)
-  #     if(one_chr == "," || one_chr == " "){
-  #         one_chr <- ""
-  #     }
-  #     whole_chr <- paste(whole_chr,one_chr,sep="")
-  #     if(nchar(whole_chr) == 16){
-  #         lat_longs_list <- append(lat_longs_list,whole_chr,after=length(lat_longs_list))
-  #         whole_chr <- ""
-  #     }
-  # }
-  # csv_sub_str <- gsub(" ",",",csv_sub_str)
+
   latt <- c()
   longg <- c()
   for(val in 1:length(lat_long_list)){
@@ -106,9 +90,7 @@ for(csv_row in csv$WKT){
     meanlst <- append(meanlst,mean,after=length(meanlst))
     maxlst <- append(maxlst,max(ndvi_df$NDVI),after=length(maxlst))
     minlst <- append(minlst,min(ndvi_df$NDVI),after=length(minlst))
-    
-    # write.csv(csv_row_df,polygon_dir,append=TRUE,sep=",",quote=FALSE,row.names=FALSE)
-    # cat(i,"  NDVI  ",get_date,"   ",mean,"   ",max(ndvi_df$NDVI),"    ",min(ndvi_df$NDVI),"\n")
+
     i <- i + 1
   }
   cat(pi,csv$pid[pi]," Polygon Data Calculated\n")
@@ -117,15 +99,6 @@ for(csv_row in csv$WKT){
   meanlst <- append(meanlst," ",after=length(meanlst))
   maxlst <- append(maxlst," ",after=length(maxlst))
   minlst <- append(minlst," ",after=length(minlst))
-  
-  # if(pi == 50){
-  #   polygon_dir <- paste(tile_dir,paste(pi,"csv",sep="."),sep="/")
-  #   numlst <- c()
-  #   datelst <- c()
-  #   meanlst <- c()
-  #   maxlst <- c()
-  #   minlst <- c()
-  # }
   pi <- pi + 1
   },error=function(e){
     err <- paste(paste("ERROR : ",paste(pi,csv$pid[pi])),paste("Polygon",conditionMessage(e)))

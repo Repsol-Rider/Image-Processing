@@ -4,7 +4,7 @@ library('rlist')
 options(warn=-1,max.print=50,digits=14)
 # GETTING LONGITUDES AND LATITUDES FROM A GIVEN CSV FILE
 # csv <- read.csv(file="E:/GIS/t43phr.csv",stringsAsFactors=FALSE)
-csv <- read.csv(file="D:/JOB/GIS/t43phr.csv",stringsAsFactors=FALSE)
+csv <- read.csv(file="D:/JOB/GIS/t43phr.csv",stringsAsFactors=FALSE)    
 tile_dir <- "D:/JOB/GIS/T43PHR/INDICES/ndvi"
 polygon_dir <- paste(tile_dir,"test_polygon.csv",sep="/")
 file.create(polygon_dir,showWarnings=FALSE)
@@ -14,7 +14,9 @@ datelst <- c()
 meanlst <- c()
 maxlst <- c()
 minlst <- c()
+error_lst <- c()
 for(csv_row in csv$WKT){
+  tryCatch({
   csv_len <- nchar(csv_row)
   csv_row <- substr(csv_row,17,csv_len-3)
   lat_long_list <- c()
@@ -93,7 +95,7 @@ for(csv_row in csv$WKT){
     for(val in 1:length(ndvi_df$NDVI)){
       mean <- ndvi_df$NDVI[val] + mean
     }
-    # cat(val,"Pixels Found in",cname,"Polygon\n")
+
     mean <- mean/val
     get_date <- names(croped)
     get_date <- substr(get_date,8,15)
@@ -125,8 +127,14 @@ for(csv_row in csv$WKT){
   #   minlst <- c()
   # }
   pi <- pi + 1
+  },error=function(e){
+    err <- paste(paste("ERROR : ",pi,csv$pid[pi]),paste("Polygon",conditionMessage(e)))
+    error_lst <- append(error_lst,err,after=length(error_lst))
+  })
 }
 full_df <- data.frame(PID=numlst,Date=datelst,Mean=meanlst,Max=maxlst,Min=minlst)
 write.csv(full_df,polygon_dir,col.names=FALSE,row.names=FALSE)
+write.table(error_lst,paste(tile_dir,"error.txt",sep="/"),sep="\n",row.names=FALSE,col.names=FALSE)
+cat("All Wrong polygons are specified in error.txt located in",tile_dir)
 
 #https://www.neonscience.org/resources/learning-hub/tutorials/dc-crop-extract-raster-data-r

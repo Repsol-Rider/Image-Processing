@@ -128,7 +128,7 @@ for(csv_row in csv$WKT){
   # }
   pi <- pi + 1
   },error=function(e){
-    err <- paste(paste("ERROR : ",pi,csv$pid[pi]),paste("Polygon",conditionMessage(e)))
+    err <- paste(paste("ERROR : ",paste(pi,csv$pid[pi])),paste("Polygon",conditionMessage(e)))
     error_lst <- append(error_lst,err,after=length(error_lst))
   })
 }

@@ -7,6 +7,7 @@ gdal_translate(src_dataset = "ndvi.vrt",
                dst_dataset = "ndvi.tif", 
                output_Raster = TRUE,
                options = c("BIGTIFF=YES", "COMPRESSION=LZW"))
+unlink("ndvi.vrt",force=FALSE,recursive=FALSE)
 plot(raster("D:/JOB/GIS/TS/INDICES/CRS_CHANGED/ndvi/ndvi.tif"))
 
 

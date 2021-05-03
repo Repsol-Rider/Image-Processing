@@ -10,12 +10,14 @@ def Get(Total):
     DataFrame = pd.DataFrame.from_dict(JSON_RESPONSE['features'][0]['properties']['parameter'])
     DataFrame.to_csv(FILE_DIR)
     DataFrame = pd.read_csv(FILE_DIR)
-    DataFrame["Latitude"] = tempLatitude
-    DataFrame["Longitude"] = tempLongitude
-    DataFrame.to_csv(FILE_DIR,index=False)
+    DataFrame.to_csv(FILE_DIR,index=False,header=True)
     DataFrame = pd.read_csv(FILE_DIR)
-    DataFrame.rename(columns={"Unnamed: 0":"Date"},inplace=True)
-    DataFrame.to_csv(FILE_DIR,index=False)
+    DataFrame.rename(columns={"Unnamed: 0":"Parameter"},inplace=True)
+    DataFrame = DataFrame.T
+    DataFrame.to_csv(FILE_DIR,index=True,header=False)
+    DataFrame = pd.read_csv(FILE_DIR)
+    DataFrame.insert(0,"Cordinate",str(tempLatitude)+","+str(tempLongitude), True)
+    DataFrame.to_csv(FILE_DIR,index=False,header=True)
 class Operation():
     def __init__(self):
         self.processes = 10 # Please do not go more than 10 concurrent requests.

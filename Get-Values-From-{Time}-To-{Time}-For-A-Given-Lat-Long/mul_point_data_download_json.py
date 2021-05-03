@@ -18,3 +18,4 @@ for Long,Lat,Serial in zip(pointsDataFrame['X'],pointsDataFrame['Y'],pointsDataF
     # Download File to Folder
     output_file_location = os.path.join(output_folder, os.path.basename("JSON/"+str(Serial)+".json"))
     urllib.request.urlretrieve(csv_request_url, output_file_location)
+    print("JSON/"+str(Serial)+".json----Downloaded")

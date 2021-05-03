@@ -1,4 +1,4 @@
-# Image-Processing-R-Language
+# Image-Processing
 
 Now contains 2 folders.
 1st one have old code.

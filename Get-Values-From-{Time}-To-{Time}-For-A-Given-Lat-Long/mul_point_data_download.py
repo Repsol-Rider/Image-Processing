@@ -22,7 +22,7 @@ class Operation():
     def Perform(self):
         BEGIN_TIME = time.time()
         Latitude_Longitude = []
-        pointsDataFrame = pd.read_csv("C:/Users/rakes/Downloads/grids_cordinates.csv", usecols=list)
+        pointsDataFrame = pd.read_csv("points.csv", usecols=list)
         for Long,Lat in zip(pointsDataFrame['X'],pointsDataFrame['Y']):
             Latitude_Longitude.append([Lat,Long])
         POINTS = []

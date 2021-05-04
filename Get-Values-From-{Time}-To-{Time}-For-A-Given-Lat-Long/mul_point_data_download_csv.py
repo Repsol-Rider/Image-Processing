@@ -12,20 +12,30 @@ def Get(Total):
     DataFrame = pd.read_csv(FILE_DIR)
     DataFrame.to_csv(FILE_DIR,index=False,header=True)
     DataFrame = pd.read_csv(FILE_DIR)
-    DataFrame.rename(columns={"Unnamed: 0":"Parameter"},inplace=True)
-    DataFrame = DataFrame.T
-    DataFrame.to_csv(FILE_DIR,index=True,header=False)
-    DataFrame = pd.read_csv(FILE_DIR)
-    DataFrame.insert(0,"Cordinate",str(tempLatitude)+","+str(tempLongitude), True)
+    
+    #code for horizontal formatting for csv
+    
+    #DataFrame.rename(columns={"Unnamed: 0":"Parameter"},inplace=True)
+    #DataFrame = DataFrame.T
+    #DataFrame.to_csv(FILE_DIR,index=True,header=False)
+    #DataFrame = pd.read_csv(FILE_DIR)
+    #DataFrame.insert(0,"Cordinate",str(tempLatitude)+","+str(tempLongitude), True)
+    #DataFrame.to_csv(FILE_DIR,index=False,header=True)
+    
+    #code for vertical formatting for csv
+    
+    DataFrame.rename(columns={"Unnamed: 0":"Dates"},inplace=True)
+    DataFrame["Latitude"]=tempLatitude
+    DataFrame["Longitude"]=tempLongitude
     DataFrame.to_csv(FILE_DIR,index=False,header=True)
 class Operation():
     def __init__(self):
         self.processes = 10 # Please do not go more than 10 concurrent requests.
         start_date = "20100101"
-        end_date = "20200430"
+        end_date = "20210430"
         parametersCustom = "PRECTOT,RH2M,T2M_RANGE,T2M_MAX,T2M_MIN,WS50M_RANGE,WS10M_RANGE"
         self.API_URL = r"https://power.larc.nasa.gov/cgi-bin/v1/DataAccess.py?request=execute&identifier=SinglePoint&tempAverage=DAILY&parameters="+parametersCustom+"&startDate="+start_date+"&endDate="+end_date+"&lat={latitude}&lon={longitude}&outputList=JSON&userCommunity=AG"
-        self.FILE_DIR = "csv/{serial}.csv"
+        self.FILE_DIR = "CSV/{serial}.csv"
         self.tempLatitude = "{templatitude}"
         self.tempLongitude = "{templongitude}"
         self.messages = []
@@ -33,8 +43,8 @@ class Operation():
     def Perform(self):
         BEGIN_TIME = time.time()
         Latitude_Longitude = []
-        pointsDataFrame = pd.read_csv("points.csv", usecols=list)
-        for Long,Lat,Serial in zip(pointsDataFrame['X'],pointsDataFrame['Y'],pointsDataFrame['sno']):
+        pointsDataFrame = pd.read_csv("D:/JOB/GITHUB/Image-Processing/Get-Values-From-{Time}-To-{Time}-For-A-Given-Lat-Long/points.csv", usecols=list)
+        for Long,Lat,Serial in zip(pointsDataFrame['X'],pointsDataFrame['Y'],pointsDataFrame['W_GIDGID']):
             Latitude_Longitude.append([Lat,Long,Serial])
         POINTS = []
         for Latitude, Longitude, Serial in Latitude_Longitude:

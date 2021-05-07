@@ -30,6 +30,7 @@ def Get(Total):
     DataFrame.to_csv(FILE_DIR,index=False,header=True)
     DataFrame = pd.read_csv(FILE_DIR)
     DataFrame.to_json(tempSeries)
+    os.remove(FILE_DIR) #if you remove this line you can download csv and json at a time
 class Operation():
     def __init__(self):
         self.processes = 10 # Please do not go more than 10 concurrent requests.

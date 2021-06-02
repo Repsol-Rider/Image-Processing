@@ -38,7 +38,7 @@ for(i in 1:length(folders)){
                     formula <- (red-nir)/(red+nir)
                 }else if(indices[j] == "savi"){
                     L <- 1.5
-                    formula <- (nir-red)/(nir+red+L)*(1.0+L)
+                    formula <- (nir-red)/(nir+red+L)*(1.0+L) # (nir-red)*(1.0+L)/(nir+red+L) ?
                 }else if(indices[j] == "evi2"){
                     formula <- 2.4*(nir-red)/(nir+red+1.0)
                 }else{

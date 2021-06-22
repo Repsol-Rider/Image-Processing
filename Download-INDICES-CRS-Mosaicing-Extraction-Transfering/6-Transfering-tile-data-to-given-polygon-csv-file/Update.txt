@@ -1,0 +1,3 @@
+own_code.r - there is a bug in this code, the intention of the code is to crop polygons from tiff images for a time series but this code only gets data for the given coordinates in the main csv file 
+
+clip_tiles_using_polygon_coordinates.py - working properly using spyder python

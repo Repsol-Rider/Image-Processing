@@ -5,9 +5,7 @@ import os,requests,html2text
 h = html2text.HTML2Text()
 h.ignore_links = True
 os.chdir("D:/JOB/GIS/PIXEL_DATA/TS")
-# username2 - ninadobrev
-# password2 - imageprocessing
-api = SentinelAPI('fake99', 'newpassword88','https://scihub.copernicus.eu/dhus')
+api = SentinelAPI('USERNAME', 'PASSWORD','https://scihub.copernicus.eu/dhus')
 #tiles = ['43QHV','43QHA','43QHB','44QKM','44QKE']
 tiles = ['43QHA','43QHB','43QHU','43QHV','44QKD','44QKE','44QKF','44QKG','44QLD','44QLE','44QLF','44QLG','44QME','44QMF']
 
